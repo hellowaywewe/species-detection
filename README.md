@@ -2,7 +2,7 @@
 
 本文档用于指导大家在GPU环境下完成MindSpore YOLOv3-DarkNet53动物物种检测实践。
 
-> **注意：** 该教程的代码是基于`v1.2.0`及以上版本的MindSpore (https://gitee.com/mindspore/mindspore/tree/r1.2/)运行的。
+> **注意：** 该教程的代码是基于`v1.2.0`及以上版本的MindSpore (https://gitee.com/mindspore/mindspore/tree/r1.2/) 运行的。
 
 ## 上手指导
 
@@ -14,7 +14,7 @@
     pip install opencv-python flask easydict flask_cors pillow pandas
     ```
 
-* MindSpore (**v1.1.1**)
+* MindSpore (**v1.2.0**)
 
     为方便快速上手实践，可直接使用MindSpore GPU容器部署环境。使用MindSpore的安装教程请移步至 [MindSpore安装页面](https://gitee.com/mindspore/mindspore/blob/master/README.md).
 
