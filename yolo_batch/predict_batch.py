@@ -262,7 +262,7 @@ def parse_args():
     parser.add_argument('--log_path', type=str, default='outputs/', help='checkpoint save location')
     # detect_related
     parser.add_argument('--nms_thresh', type=float, default=0.5, help='threshold for NMS')
-    parser.add_argument('--ignore_threshold', type=float, default=0.7,
+    parser.add_argument('--ignore_threshold', type=float, default=0.1,
                         help='threshold to throw low quality boxes')
 
     args, _ = parser.parse_known_args()
