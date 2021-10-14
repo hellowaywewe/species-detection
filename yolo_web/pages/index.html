@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>山水自然保护中心推理实践</title>
+</head>
+<script src="./jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<body>
+<!--    设置input的type和accept，当然也可设置multiple允许多文件上传，这里不做设置-->
+<input type="file" id="img_btn" accept="image/JPG，image/jpg, image/jpeg, image/png" onchange="predictImg()"/>
+<h2>以下展示推理的结果与效果图：</h2>
+<p id="predict_txt"></p>
+<img src="./mindspore.png" alt="图片加载..." id="predict_img">
+<script>
+    function predictImg(){
+     	var file = $("#img_btn").get(0).files[0];
+     	var reader = new FileReader()
+     	reader.readAsDataURL(file)
+     	reader.onload = function(e) {
+			var img_base64 = e.target.result;
+		    predict(img_base64.split(',')[1]);
+		}
+     }
+
+    function predict(img_base64) {
+        var url="/predict";
+        var payload = {"data": img_base64};
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: JSON.stringify(payload),
+          async: false,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (res) {
+            if(res.status== 0){
+                instance = res.instance;
+                $("#predict_txt").html("图中共标注了" + instance.boxes_num + "个框，其中物种" + instance.category + "的得分最高, 为" + instance.max_score + "。");
+                $("#predict_img").attr("src",instance.data);
+            }
+            else{
+                $("#predict_txt").html("抱歉！标注0个框，无法检测出物种！");
+                $("#predict_img").attr("src","./sorry.png");
+            }
+          },
+          error: function (res) {
+              alert("error");
+              alert(res);
+          }
+        });
+    }
+    </script>
+<style>
+        img{
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+</body>
+</html>
