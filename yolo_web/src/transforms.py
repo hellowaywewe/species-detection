@@ -515,4 +515,4 @@ class MultiScaleTrans:
             gt3.append(gt_box3)
             ret_annos.append(0)
         return np.array(ret_imgs), np.array(ret_annos), np.array(bbox1), np.array(bbox2), np.array(bbox3), \
-            np.array(gt1), np.array(gt2), np.array(gt3)
+               np.array(gt1), np.array(gt2), np.array(gt3)

@@ -298,5 +298,3 @@ def create_yolo_datasetv2(image_dir,
     ds = ds.batch(batch_size, drop_remainder=True)
     ds = ds.repeat(max_epoch)
     return ds, len(yolo_dataset)
-
-

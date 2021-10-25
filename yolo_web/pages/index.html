@@ -7,7 +7,6 @@
 <script src="./jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <body>
 <h1>山水自然保护中心 + MindSpore物种识别推理实践</h1>
-<!--    设置input的type和accept，当然也可设置multiple允许多文件上传，这里不做设置-->
 <input type="file" id="img_btn" accept="image/JPG，image/jpg, image/jpeg, image/png" onchange="predictImg()"/>
 <h2>推理结果与效果图展示：</h2>
 <p id="predict_txt"></p>
@@ -41,13 +40,12 @@
                 $("#predict_img").attr("src",instance.data);
             }
             else{
-                $("#predict_txt").html("抱歉！标注0个框，无法检测出物种！");
+                $("#predict_txt").html(res.err_msg);
                 $("#predict_img").attr("src","./sorry.png");
             }
           },
           error: function (res) {
-              alert("error");
-              alert(res);
+              $("#predict_txt").html("抱歉！服务器出错了！");
           }
         });
     }
