@@ -286,6 +286,8 @@ def create_yolo_datasetv2(image_dir,
     hwc_to_chw = CV.HWC2CHW()
 
     default_config.dataset_size = len(yolo_dataset)
+    cores = multiprocessing.cpu_count()
+    num_parallel_workers = int(cores / device_num)
 
     ds = de.GeneratorDataset(yolo_dataset, column_names=["image", "img_id"],
                              sampler=distributed_sampler)
@@ -293,8 +295,8 @@ def create_yolo_datasetv2(image_dir,
     ds = ds.map(input_columns=["image", "img_id"],
                 output_columns=["image", "image_shape", "img_id"],
                 column_order=["image", "image_shape", "img_id"],
-                operations=compose_map_func, num_parallel_workers=8)
-    ds = ds.map(input_columns=["image"], operations=hwc_to_chw, num_parallel_workers=8)
+                operations=compose_map_func, num_parallel_workers=min(8, num_parallel_workers))
+    ds = ds.map(input_columns=["image"], operations=hwc_to_chw, num_parallel_workers=min(8, num_parallel_workers))
     ds = ds.batch(batch_size, drop_remainder=True)
     ds = ds.repeat(max_epoch)
     return ds, len(yolo_dataset)
